@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'air_quality_service.dart';
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({super.key});
+  final String? initialQuery;
+  const SearchScreen({super.key, this.initialQuery});
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -16,6 +17,15 @@ class _SearchScreenState extends State<SearchScreen> {
   Map<String, dynamic>? _result;
   String _searchedLocation = '';
   String _error = '';
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.initialQuery != null) {
+      _controller.text = widget.initialQuery!;
+      _search();
+    }
+  }
 
   Future<void> _search() async {
     final query = _controller.text.trim();

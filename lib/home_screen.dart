@@ -6,6 +6,7 @@ import 'air_quality_service.dart';
 import 'history_screen.dart';
 import 'pollutant_card.dart';
 import 'search_screen.dart';
+import 'map_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -142,12 +143,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(children: [
-                          Icon(Icons.location_on, color: Colors.green.shade700),
-                          const SizedBox(width: 8),
-                          Text(_locationName,
-                              style: const TextStyle(fontSize: 14, color: Colors.grey)),
-                        ]),
+                        GestureDetector(
+                          onTap: () => Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => MapScreen())),
+                          child: Row(children: [
+                            Icon(Icons.location_on, color: Colors.green.shade700),
+                            const SizedBox(width: 8),
+                            Text(_locationName,
+                                style: const TextStyle(fontSize: 14, color: Colors.grey)),
+                            const SizedBox(width: 4),
+                            Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey.shade400),
+                          ]),
+                        ),
                         const SizedBox(height: 20),
 
                         Container(
