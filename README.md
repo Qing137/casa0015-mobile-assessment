@@ -2,7 +2,7 @@
 
 Your all-in-one companion for urban running — decide before you go, track while you run, log when you're done.
 
----
+
 
 ## Why Runify?
 
@@ -12,7 +12,7 @@ Most people deal with this by switching between three or four different apps —
 
 Runify brings all of this together in one app. Before you go out, it helps you decide whether today is suitable for running and where nearby is best for a run. During the run, it uses the accelerometer to track steps, distance, and pace in real time. After the run, it saves the record, including the air quality at the time and calories burned.
 
----
+
 
 ## Screenshots
 
