@@ -25,6 +25,98 @@ class AirQualityService {
     }
   }
 
+  Future<Map<String, dynamic>> fetchWeather(double lat, double lon) async {
+    final url =
+        'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=$apiKey&units=metric';
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      return {
+        'temp': (data['main']['temp'] as num).toDouble(),
+        'humidity': (data['main']['humidity'] as num).toInt(),
+        'windSpeed': (data['wind']['speed'] as num).toDouble(),
+        'description': data['weather'][0]['description'],
+        'icon': data['weather'][0]['icon'],
+      };
+    } else {
+      throw Exception('Failed to fetch weather');
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> fetchNearbyPlaces(double lat, double lon) async {
+    final types = ['park', 'stadium', 'gym', 'natural_feature'];
+    final List<Map<String, dynamic>> allPlaces = [];
+    final Set<String> seenIds = {};
+
+    for (final type in types) {
+      final url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
+          '?location=$lat,$lon'
+          '&radius=5000'
+          '&type=$type'
+          '&key=${googleMapsApiKey}';
+
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final results = data['results'] as List;
+        for (final place in results) {
+          final id = place['place_id'] as String;
+          if (!seenIds.contains(id)) {
+            seenIds.add(id);
+            allPlaces.add({
+              'name': place['name'],
+              'lat': place['geometry']['location']['lat'],
+              'lon': place['geometry']['location']['lng'],
+              'type': type,
+            });
+          }
+        }
+      }
+    }
+
+    // 按距离排序，最多返回20个
+    allPlaces.sort((a, b) {
+      final distA = _distance(lat, lon, a['lat'], a['lon']);
+      final distB = _distance(lat, lon, b['lat'], b['lon']);
+      return distA.compareTo(distB);
+    });
+
+    return allPlaces.take(20).toList();
+  }
+
+  double _distance(double lat1, double lon1, double lat2, double lon2) {
+    return ((lat2 - lat1) * (lat2 - lat1)) + ((lon2 - lon1) * (lon2 - lon1));
+  }
+
+  Future<List<Map<String, dynamic>>> fetchHourlyForecast(double lat, double lon) async {
+    final url =
+        'https://api.open-meteo.com/v1/forecast?latitude=$lat&longitude=$lon&hourly=temperature_2m,precipitation_probability,weathercode,windspeed_10m&timezone=auto&forecast_days=2';
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      final times = data['hourly']['time'] as List;
+      final temps = data['hourly']['temperature_2m'] as List;
+      final precipProb = data['hourly']['precipitation_probability'] as List;
+      final wind = data['hourly']['windspeed_10m'] as List;
+
+      final currentHour = DateTime.now().hour;
+
+      List<Map<String, dynamic>> result = [];
+      for (int i = currentHour; i < currentHour + 6 && i < times.length; i++) {
+        result.add({
+          'time': times[i].toString().substring(11, 16),
+          'temp': (temps[i] as num).toDouble(),
+          'precipProb': (precipProb[i] as num).toInt(),
+          'wind': (wind[i] as num).toDouble(),
+          'isNow': i == currentHour,
+        });
+      }
+      return result;
+    } else {
+      throw Exception('Failed to fetch forecast');
+    }
+  }
+
   String getAqiLabel(int aqi) {
     switch (aqi) {
       case 1: return 'Good';
