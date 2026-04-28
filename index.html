@@ -2,696 +2,783 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Runify — Run Smarter in the City</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Runify</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --green-deep: #2D6A4F;
-      --green-mid: #40916C;
-      --green-light: #74C69D;
-      --green-pale: #D8F3DC;
-      --green-ultra: #F0FDF4;
-      --sky: #E8F4FD;
-      --sand: #FFF8F0;
-      --text-dark: #1A2E1A;
-      --text-mid: #4A6741;
-      --text-soft: #7B9E7B;
-      --white: #FFFFFF;
+      --green: #3d963f;
+      --green-dark: #2f7d33;
+      --green-soft: #edf7ec;
+      --bg: #f7f9f5;
+      --card: #ffffff;
+      --text: #121a13;
+      --muted: #6b746d;
+      --line: #e2e9df;
+      --shadow: 0 14px 35px rgba(31, 61, 34, 0.08);
+      --maxw: 1200px;
     }
- 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
- 
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
- 
     body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--white);
-      color: var(--text-dark);
-      overflow-x: hidden;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
     }
- 
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    .container {
+      width: min(var(--maxw), calc(100% - 48px));
+      margin: 0 auto;
+    }
+
     /* NAV */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      padding: 18px 48px;
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(16px);
+      background: rgba(247, 249, 245, 0.88);
+      border-bottom: 1px solid rgba(226, 233, 223, 0.85);
+    }
+
+    .nav-inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: rgba(255,255,255,0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(116,198,157,0.2);
+      padding: 16px 0;
+      gap: 20px;
     }
- 
-    .nav-logo {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.5rem;
-      color: var(--green-deep);
+
+    .brand {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text);
     }
- 
+
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(145deg, #4ba44e, #2d7a31);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 8px 18px rgba(61, 150, 63, 0.2);
+    }
+
     .nav-links {
       display: flex;
-      gap: 36px;
-      list-style: none;
-    }
- 
-    .nav-links a {
-      text-decoration: none;
-      color: var(--text-mid);
-      font-size: 0.9rem;
+      align-items: center;
+      gap: 28px;
+      color: var(--muted);
       font-weight: 500;
-      transition: color 0.2s;
+      font-size: 0.95rem;
     }
- 
-    .nav-links a:hover { color: var(--green-deep); }
- 
-    .nav-cta {
-      background: var(--green-deep);
-      color: white !important;
-      padding: 10px 24px;
-      border-radius: 100px;
-      font-weight: 600 !important;
-      transition: background 0.2s !important;
+
+    .nav-links a { transition: color 0.2s; }
+    .nav-links a:hover { color: var(--green); }
+    .nav-links a.active {
+      color: var(--green);
+      border-bottom: 2px solid var(--green);
+      padding-bottom: 2px;
     }
- 
-    .nav-cta:hover { background: var(--green-mid) !important; color: white !important; }
- 
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 22px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--green);
+      color: white;
+      box-shadow: 0 10px 20px rgba(61, 150, 63, 0.22);
+    }
+
+    .btn-primary:hover { background: var(--green-dark); transform: translateY(-1px); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1.5px solid var(--line);
+    }
+
+    .btn-secondary:hover { border-color: #bfd0b9; background: #fcfdfb; }
+
     /* HERO */
     .hero {
-      min-height: 60vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 120px 48px 40px;
-      background: linear-gradient(180deg, var(--green-ultra) 0%, var(--sky) 60%, var(--green-ultra) 100%);
-      position: relative;
+      padding: 60px 0 50px;
       overflow: hidden;
     }
- 
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -100px; right: -100px;
-      width: 600px; height: 600px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(116,198,157,0.15) 0%, transparent 70%);
-      pointer-events: none;
-    }
- 
-    .hero::after {
-      content: '';
-      position: absolute;
-      bottom: -80px; left: -80px;
-      width: 400px; height: 400px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(45,106,79,0.08) 0%, transparent 70%);
-      pointer-events: none;
-    }
- 
-    .hero-content {
-      max-width: 560px;
-      animation: fadeUp 0.8s ease both;
-    }
- 
-    .hero-badge {
-      display: inline-flex;
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
       align-items: center;
-      gap: 8px;
-      background: var(--green-pale);
-      color: var(--green-deep);
-      padding: 8px 16px;
-      border-radius: 100px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      margin-bottom: 28px;
+      min-height: 520px;
     }
- 
+
+    .hero-left { max-width: 540px; }
+
     .hero h1 {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(2.8rem, 5vw, 4.2rem);
-      line-height: 1.1;
-      color: var(--text-dark);
-      margin-bottom: 24px;
+      font-size: clamp(2.6rem, 4.5vw, 4.8rem);
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+      margin-bottom: 20px;
     }
- 
-    .hero h1 em {
-      font-style: italic;
-      color: var(--green-mid);
+
+    .hero h1 .accent { color: var(--green); }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--muted);
+      margin-bottom: 28px;
+      line-height: 1.65;
+      max-width: 480px;
     }
- 
-    .hero p {
-      font-size: 1.1rem;
-      line-height: 1.7;
-      color: var(--text-mid);
-      margin-bottom: 40px;
-      font-weight: 300;
-    }
- 
-    .hero-buttons {
+
+    .hero-actions {
       display: flex;
-      gap: 16px;
       flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 32px;
     }
- 
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--green-deep);
-      color: white;
-      padding: 16px 32px;
-      border-radius: 100px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 4px 20px rgba(45,106,79,0.25);
-    }
- 
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(45,106,79,0.35);
-    }
- 
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: transparent;
-      color: var(--green-deep);
-      padding: 16px 32px;
-      border-radius: 100px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1rem;
-      border: 2px solid var(--green-light);
-      transition: all 0.2s;
-    }
- 
-    .btn-secondary:hover {
-      background: var(--green-pale);
-    }
- 
-    .hero-phones {
-      flex: 1;
+
+    .hero-points {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .hero-points span {
+      display: inline-flex;
       align-items: center;
+      gap: 10px;
+    }
+
+    /* PHONE MOCKUPS */
+    .hero-visual {
       position: relative;
-      animation: fadeUp 0.8s 0.2s ease both;
+      height: 560px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
- 
-    .phone-mockup {
-      width: 220px;
-      border-radius: 36px;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.15);
-      border: 6px solid white;
-      transition: transform 0.3s;
+
+    .hero-bg-blob {
+      position: absolute;
+      inset: 40px 0 0 40px;
+      background: linear-gradient(160deg, #e8f5e2, #daf0da);
+      border-radius: 40px;
+      z-index: 0;
     }
- 
-    .phone-mockup:hover { transform: translateY(-8px); }
- 
+
+    /* Decorative trees like the design */
+    .hero-bg-blob::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 20px;
+      width: 120px;
+      height: 140px;
+      background: linear-gradient(180deg, #c8e6c9, #a5d6a7);
+      border-radius: 50% 50% 0 0;
+      opacity: 0.5;
+    }
+
+    .phones-wrapper {
+      position: relative;
+      width: 340px;
+      height: 480px;
+      z-index: 1;
+    }
+
+    .phone-frame {
+      position: absolute;
+      border-radius: 38px;
+      background: #0a0f0a;
+      padding: 8px;
+      overflow: hidden;
+    }
+
+    .phone-frame img {
+      border-radius: 32px;
+      display: block;
+      width: 100%;
+    }
+
     .phone-main {
-      position: relative;
+      width: 210px;
+      top: 0;
+      left: 20px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.2);
       z-index: 2;
     }
- 
+
     .phone-back {
-      position: absolute;
-      left: -60px;
-      top: 40px;
-      opacity: 0.7;
+      width: 195px;
+      top: 50px;
+      right: 0;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
       z-index: 1;
+      transform: rotate(6deg);
     }
- 
-    .phone-back2 {
-      position: absolute;
-      right: -60px;
-      top: 60px;
-      opacity: 0.6;
-      z-index: 1;
+
+    /* WHY SECTION */
+    .why-section {
+      padding: 60px 0;
+      background: white;
     }
- 
-    /* STATS */
-    .stats {
-      background: var(--green-deep);
-      padding: 60px 48px;
-      display: flex;
-      justify-content: center;
-      gap: 80px;
-      flex-wrap: wrap;
-    }
- 
-    .stat-item {
+
+    .section-title {
       text-align: center;
-      color: white;
+      margin-bottom: 36px;
     }
- 
-    .stat-number {
-      font-family: 'DM Serif Display', serif;
-      font-size: 3rem;
-      color: var(--green-light);
-      display: block;
-    }
- 
-    .stat-label {
-      font-size: 0.85rem;
-      opacity: 0.8;
-      margin-top: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
- 
-    /* FEATURES */
-    .features {
-      padding: 100px 48px;
-      background: var(--white);
-    }
- 
-    .section-header {
-      text-align: center;
-      margin-bottom: 64px;
-    }
- 
-    .section-tag {
-      display: inline-block;
-      background: var(--green-pale);
-      color: var(--green-deep);
-      padding: 6px 16px;
-      border-radius: 100px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 16px;
-    }
- 
-    .section-header h2 {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(2rem, 3.5vw, 3rem);
-      color: var(--text-dark);
-      margin-bottom: 16px;
-    }
- 
-    .section-header p {
-      color: var(--text-soft);
-      font-size: 1rem;
-      max-width: 480px;
-      margin: 0 auto;
-      line-height: 1.7;
-    }
- 
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
- 
-    .feature-card {
-      background: var(--green-ultra);
-      border-radius: 24px;
-      padding: 36px 32px;
-      border: 1px solid rgba(116,198,157,0.2);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
- 
-    .feature-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 48px rgba(45,106,79,0.1);
-    }
- 
-    .feature-icon {
+
+    .section-title h2 {
       font-size: 2rem;
-      margin-bottom: 16px;
-      display: block;
+      font-weight: 800;
+      letter-spacing: -0.04em;
     }
- 
-    .feature-card h3 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.3rem;
-      color: var(--text-dark);
-      margin-bottom: 10px;
+
+    .section-title p {
+      color: var(--muted);
+      margin-top: 8px;
+      font-size: 1rem;
     }
- 
-    .feature-card p {
-      color: var(--text-soft);
-      font-size: 0.9rem;
-      line-height: 1.65;
-    }
- 
-    /* SCREENSHOTS */
-    .screenshots {
-      padding: 60px 48px 100px;
-      background: linear-gradient(180deg, var(--green-ultra) 0%, var(--white) 100%);
-    }
- 
-    .screenshots-scroll {
-      display: flex;
-      gap: 24px;
-      overflow-x: auto;
-      padding: 20px 0 40px;
-      scrollbar-width: none;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
- 
-    .screenshots-scroll::-webkit-scrollbar { display: none; }
- 
-    .screenshot-item {
-      flex: 0 0 auto;
-      text-align: center;
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
- 
-    .screenshot-item.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
- 
-    .screenshot-item:nth-child(1) { transition-delay: 0s; }
-    .screenshot-item:nth-child(2) { transition-delay: 0.15s; }
-    .screenshot-item:nth-child(3) { transition-delay: 0.3s; }
-    .screenshot-item:nth-child(4) { transition-delay: 0.45s; }
- 
-    .screenshot-item img {
-      width: 180px;
-      border-radius: 28px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
-      border: 4px solid white;
-      transition: transform 0.3s;
-    }
- 
-    .screenshot-item img:hover { transform: translateY(-8px) scale(1.02); }
- 
-    .screenshot-label {
-      margin-top: 12px;
-      font-size: 0.8rem;
-      color: var(--text-soft);
-      font-weight: 500;
-    }
- 
-    /* HOW IT WORKS */
-    .how {
-      padding: 100px 48px;
-      background: var(--white);
-    }
- 
-    .steps {
+
+    .grid-3 {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 40px;
-      max-width: 1000px;
-      margin: 0 auto;
+      gap: 20px;
     }
- 
-    .step {
-      text-align: center;
-      padding: 0 20px;
+
+    .info-card {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 28px 24px;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s;
     }
- 
-    .step-number {
-      width: 56px; height: 56px;
-      border-radius: 50%;
-      background: var(--green-deep);
-      color: white;
-      font-family: 'DM Serif Display', serif;
+
+    .info-card:hover { transform: translateY(-3px); }
+
+    .card-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: var(--green-soft);
+      display: grid;
+      place-items: center;
       font-size: 1.4rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 20px;
+      margin-bottom: 16px;
     }
- 
-    .step h3 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.2rem;
-      color: var(--text-dark);
-      margin-bottom: 10px;
+
+    .info-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
     }
- 
-    .step p {
-      color: var(--text-soft);
+
+    .info-card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* FEATURES */
+    .features-section {
+      padding: 60px 0;
+      background: var(--bg);
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .feature-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 24px 20px;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s;
+    }
+
+    .feature-card:hover { transform: translateY(-3px); }
+
+    .feature-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+
+    .feature-card p {
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+
+    /* APP SCREENS */
+    .screens-section {
+      padding: 60px 0;
+      background: white;
+    }
+
+    .screens-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .screen-card { text-align: center; }
+
+    .screen-device {
+      margin: 0 auto 12px;
+      border-radius: 32px;
+      background: #0a0f0a;
+      padding: 7px;
+      box-shadow: 0 20px 40px rgba(16,20,18,0.16);
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .screen-device.visible { opacity: 1; transform: translateY(0); }
+    .screen-card:nth-child(1) .screen-device { transition-delay: 0s; }
+    .screen-card:nth-child(2) .screen-device { transition-delay: 0.1s; }
+    .screen-card:nth-child(3) .screen-device { transition-delay: 0.2s; }
+    .screen-card:nth-child(4) .screen-device { transition-delay: 0.3s; }
+
+    .screen-device img {
+      border-radius: 26px;
+      width: 100%;
+      display: block;
+    }
+
+    .screen-device:hover { transform: translateY(-6px) !important; }
+
+    .screen-card h4 {
       font-size: 0.9rem;
-      line-height: 1.65;
-    }
- 
-    /* TECH */
-    .tech {
-      padding: 80px 48px;
-      background: var(--green-ultra);
-    }
- 
-    .tech-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      justify-content: center;
-      max-width: 800px;
-      margin: 0 auto;
-    }
- 
-    .tech-badge {
-      background: white;
-      border: 1px solid var(--green-light);
-      color: var(--green-deep);
-      padding: 10px 20px;
-      border-radius: 100px;
-      font-size: 0.85rem;
       font-weight: 500;
+      color: var(--muted);
     }
- 
-    /* CTA */
-    .cta {
-      padding: 100px 48px;
-      background: var(--green-deep);
-      text-align: center;
-      position: relative;
-      overflow: hidden;
+
+    /* TECH & FUTURE */
+    .tech-section {
+      padding: 60px 0;
+      background: var(--bg);
     }
- 
-    .cta::before {
-      content: '';
-      position: absolute;
-      top: -100px; left: 50%;
-      transform: translateX(-50%);
-      width: 600px; height: 600px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(116,198,157,0.15) 0%, transparent 70%);
+
+    .tech-future-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
     }
- 
-    .cta h2 {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(2rem, 4vw, 3.5rem);
-      color: white;
-      margin-bottom: 20px;
-      position: relative;
-    }
- 
-    .cta p {
-      color: rgba(255,255,255,0.7);
-      font-size: 1.05rem;
-      margin-bottom: 40px;
-      position: relative;
-    }
- 
-    .cta .btn-primary {
+
+    .tech-panel, .future-panel {
       background: white;
-      color: var(--green-deep);
-      position: relative;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: var(--shadow);
     }
- 
-    .cta .btn-primary:hover {
-      background: var(--green-pale);
+
+    .tech-panel h3, .future-panel h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
     }
- 
+
+    .tech-icons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .tech-icons-wide {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 16px;
+    }
+
+    .tech-item {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px 12px;
+      text-align: center;
+      background: var(--bg);
+      transition: transform 0.2s;
+    }
+
+    .tech-item:hover { transform: translateY(-2px); }
+
+    .tech-item-icon {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+
+    .tech-item strong {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+
+    .tech-item span {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .future-panel ul {
+      list-style: none;
+      display: grid;
+      gap: 14px;
+    }
+
+    .future-panel li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+
+    .future-panel li::before {
+      content: '✓';
+      color: var(--green);
+      font-weight: 800;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
     /* FOOTER */
     footer {
-      padding: 40px 48px;
-      background: var(--text-dark);
+      background: linear-gradient(180deg, #3f993f, #2a7230);
+      color: white;
+      padding: 22px 0;
+    }
+
+    .footer-inner {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
       gap: 16px;
     }
- 
-    .footer-logo {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.3rem;
-      color: var(--green-light);
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.1rem;
     }
- 
-    .footer-text {
-      color: rgba(255,255,255,0.4);
-      font-size: 0.8rem;
+
+    .footer-brand-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.15);
+      display: grid;
+      place-items: center;
     }
- 
+
+    .footer-tagline {
+      color: rgba(255,255,255,0.65);
+      font-size: 0.88rem;
+    }
+
     .footer-links {
       display: flex;
-      gap: 24px;
+      align-items: center;
+      gap: 4px;
     }
- 
+
     .footer-links a {
-      color: rgba(255,255,255,0.5);
-      text-decoration: none;
+      color: rgba(255,255,255,0.7);
       font-size: 0.85rem;
+      padding: 4px 10px;
       transition: color 0.2s;
     }
- 
-    .footer-links a:hover { color: var(--green-light); }
- 
-    /* ANIMATIONS */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
+
+    .footer-links a:hover { color: white; }
+
+    .footer-copy {
+      color: rgba(255,255,255,0.4);
+      font-size: 0.78rem;
     }
- 
-    .fade-in {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .screens-grid { grid-template-columns: repeat(2, 1fr); }
+      .tech-icons { grid-template-columns: repeat(2, 1fr); }
+      .tech-icons-wide { grid-template-columns: repeat(3, 1fr); }
     }
- 
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
- 
+
     @media (max-width: 768px) {
-      nav { padding: 16px 24px; }
       .nav-links { display: none; }
-      .hero { flex-direction: column; padding: 100px 24px 60px; text-align: center; }
-      .hero-buttons { justify-content: center; }
-      .hero-phones { margin-top: 48px; }
-      .phone-back, .phone-back2 { display: none; }
-      .stats { gap: 40px; padding: 48px 24px; }
-      .features, .screenshots, .how, .tech, .cta { padding: 72px 24px; }
-      footer { padding: 32px 24px; flex-direction: column; text-align: center; }
+      .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+      .hero-visual { height: 420px; }
+      .phone-back { display: none; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .grid-4 { grid-template-columns: 1fr 1fr; }
+      .screens-grid { grid-template-columns: 1fr 1fr; }
+      .tech-future-grid { grid-template-columns: 1fr; }
+      .tech-icons-wide { grid-template-columns: repeat(2, 1fr); }
+      .footer-inner { flex-direction: column; text-align: center; }
     }
   </style>
 </head>
 <body>
- 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">🏃 Runify</div>
-  <ul class="nav-links">
-    <li><a href="#features">Features</a></li>
-    <li><a href="#screenshots">Screenshots</a></li>
-    <li><a href="#how">How it works</a></li>
-    <li><a href="https://github.com/Qing137/casa0015-mobile-assessment" target="_blank" class="nav-cta">GitHub →</a></li>
-  </ul>
-</nav>
- 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-content">
-    <div class="hero-badge">🌿 CASA0015 · UCL · Flutter</div>
-    <h1>Run <em>smarter</em><br>in the city.</h1>
-    <p>Runify is your all-in-one running companion for urban runners — check air quality and weather before you go, track your run in real time, and log every session after.</p>
- 
+
+<header class="navbar">
+  <div class="container nav-inner">
+    <a class="brand" href="#home">
+      <span class="brand-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+          <path d="M13.49 5.48c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.89 19.38l1-4.4 2.1 2v6h2v-7.5l-2.1-2 .6-3c1.3 1.5 3.3 2.5 5.5 2.5v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1l-5.2 2.2v4.7h2v-3.4l1.8-.7-1.6 8.1-4.9-1-.4 2 7 1.4z"/>
+        </svg>
+      </span>
+      <span>Runify</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#home" class="active">Home</a>
+      <a href="#features">Features</a>
+      <a href="#screens">Screens</a>
+      <a href="#tech">Tech Stack</a>
+    </nav>
+    <a class="btn btn-primary" href="https://github.com/Qing137/casa0015-mobile-assessment" target="_blank">GitHub ↗</a>
   </div>
- 
-</section>
- 
- 
- 
- 
- 
-<!-- SCREENSHOTS -->
-<section class="screenshots" id="screenshots">
- 
-  <div class="screenshots-scroll">
-    <div class="screenshot-item fade-in">
-      <img src="docs/screenshots/screen1_home.png" alt="Home"/>
-      <div class="screenshot-label">Home</div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="container hero-grid">
+      <div class="hero-left">
+        <h1>Run Smarter.<br><span class="accent">Live Healthier.</span></h1>
+        <p class="hero-desc">Runify helps you check air quality, weather, and running conditions, find the best spots, and track your runs — all in one place.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://github.com/Qing137/casa0015-mobile-assessment" target="_blank">View on GitHub</a>
+        </div>
+        <div class="hero-points">
+          <span>☁️ Check conditions before you run</span>
+          <span>📍 Find the best running spots</span>
+          <span>📊 Track and improve your progress</span>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-bg-blob"></div>
+        <div class="phones-wrapper">
+          <div class="phone-frame phone-main">
+            <img src="docs/screenshots/screen1_home.png" alt="Home Screen"/>
+          </div>
+          <div class="phone-frame phone-back">
+            <img src="docs/screenshots/screen_splash.png" alt="Splash Screen"/>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="screenshot-item fade-in">
-      <img src="docs/screenshots/screen2_running_spots.png" alt="Running Spots"/>
-      <div class="screenshot-label">Running Spots</div>
+  </section>
+
+  <!-- WHY -->
+  <section class="why-section">
+    <div class="container">
+      <div class="section-title">
+        <h2>Why Runify?</h2>
+      </div>
+      <div class="grid-3">
+        <article class="info-card">
+          <div class="card-icon">📱</div>
+          <h3>Too many apps</h3>
+          <p>Users often need separate apps for weather, air quality, maps, and tracking.</p>
+        </article>
+        <article class="info-card">
+          <div class="card-icon">❓</div>
+          <h3>Hard to decide</h3>
+          <p>It is not always easy to know whether current conditions are suitable for a run.</p>
+        </article>
+        <article class="info-card">
+          <div class="card-icon">📝</div>
+          <h3>No simple record</h3>
+          <p>Keeping a clear running log can be difficult without a dedicated tool.</p>
+        </article>
+      </div>
     </div>
-    <div class="screenshot-item fade-in">
-      <img src="docs/screenshots/screen3_advice.png" alt="Running Advice"/>
-      <div class="screenshot-label">Running Advice</div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features-section" id="features">
+    <div class="container">
+      <div class="section-title">
+        <h2>Key Features</h2>
+        <p>The app focuses on the most useful information before, during, and after a run.</p>
+      </div>
+      <div class="grid-4">
+        <article class="feature-card">
+          <div class="card-icon">🏃</div>
+          <h3>Running Advice</h3>
+          <p>Get smart advice based on air quality, weather, and rain forecast.</p>
+        </article>
+        <article class="feature-card">
+          <div class="card-icon">🌫️</div>
+          <h3>Air Quality Details</h3>
+          <p>Check current AQI, main pollutants, and health recommendations.</p>
+        </article>
+        <article class="feature-card">
+          <div class="card-icon">🌤️</div>
+          <h3>Weather Forecast</h3>
+          <p>View hourly weather and rainfall forecasts for better planning.</p>
+        </article>
+        <article class="feature-card">
+          <div class="card-icon">📋</div>
+          <h3>Run Log</h3>
+          <p>Save your runs and review your progress with detailed history and statistics.</p>
+        </article>
+      </div>
     </div>
-    <div class="screenshot-item fade-in">
-      <img src="docs/screenshots/screen7_tracking.png" alt="Track Run"/>
-      <div class="screenshot-label">Track Run</div>
+  </section>
+
+  <!-- SCREENS -->
+  <section class="screens-section" id="screens">
+    <div class="container">
+      <div class="section-title">
+        <h2>App Screens</h2>
+        <p>A quick overview of the main pages in the current prototype.</p>
+      </div>
+      <div class="screens-grid">
+        <article class="screen-card">
+          <div class="screen-device">
+            <img src="docs/screenshots/screen1_home.png" alt="Home"/>
+          </div>
+          <h4>Home</h4>
+        </article>
+        <article class="screen-card">
+          <div class="screen-device">
+            <img src="docs/screenshots/screen4_aqi.png" alt="Air Quality Details"/>
+          </div>
+          <h4>Air Quality Details</h4>
+        </article>
+        <article class="screen-card">
+          <div class="screen-device">
+            <img src="docs/screenshots/screen6_weather.png" alt="Weather Forecast"/>
+          </div>
+          <h4>Weather Forecast</h4>
+        </article>
+        <article class="screen-card">
+          <div class="screen-device">
+            <img src="docs/screenshots/screen8_runlog.png" alt="Run Log"/>
+          </div>
+          <h4>Run Log</h4>
+        </article>
+      </div>
     </div>
-  </div>
-</section>
- 
-<!-- HOW IT WORKS -->
-<section class="how" id="how">
-  <div class="section-header fade-in">
-    <span class="section-tag">How it works</span>
-    <h2>Three steps to a better run</h2>
-  </div>
-  <div class="steps">
-    <div class="step fade-in">
-      <div class="step-number">1</div>
-      <h3>Before you go</h3>
-      <p>Check AQI, weather, and find the best nearby spot.</p>
+  </section>
+
+  <!-- TECH STACK -->
+  <section class="tech-section" id="tech">
+    <div class="container">
+      <div class="section-title">
+        <h2>Tech Stack & APIs</h2>
+        <p>Built with modern mobile development tools and reliable data sources.</p>
+      </div>
+      <div class="tech-icons-wide">
+        <div class="tech-item">
+          <div class="tech-item-icon">🐦</div>
+          <strong>Flutter</strong>
+          <span>UI framework</span>
+        </div>
+        <div class="tech-item">
+          <div class="tech-item-icon">🎯</div>
+          <strong>Dart</strong>
+          <span>App logic</span>
+        </div>
+        <div class="tech-item">
+          <div class="tech-item-icon">🗺️</div>
+          <strong>Google Maps</strong>
+          <span>Running spots</span>
+        </div>
+        <div class="tech-item">
+          <div class="tech-item-icon">☁️</div>
+          <strong>OpenWeather</strong>
+          <span>Weather & AQI</span>
+        </div>
+        <div class="tech-item">
+          <div class="tech-item-icon">📡</div>
+          <strong>Sensors</strong>
+          <span>Step tracking</span>
+        </div>
+        <div class="tech-item">
+          <div class="tech-item-icon">💾</div>
+          <strong>Local Storage</strong>
+          <span>Run log data</span>
+        </div>
+      </div>
     </div>
-    <div class="step fade-in">
-      <div class="step-number">2</div>
-      <h3>While you run</h3>
-      <p>Track steps, distance, and pace in real time.</p>
-    </div>
-    <div class="step fade-in">
-      <div class="step-number">3</div>
-      <h3>After you finish</h3>
-      <p>Your stats and AQI are saved automatically.</p>
-    </div>
-  </div>
-</section>
- 
- 
- 
-<!-- CTA -->
-<section class="cta">
-  <h2>Ready to run smarter?</h2>
-  <p>View the full source code and documentation on GitHub.</p>
-  <a href="https://github.com/Qing137/casa0015-mobile-assessment" class="btn-primary" target="_blank">
-    View on GitHub →
-  </a>
-</section>
- 
-<!-- FOOTER -->
+  </section>
+
+</main>
+
 <footer>
-  <div class="footer-logo">🏃 Runify</div>
-  <div class="footer-text">CASA0015 · UCL Bartlett · 2026 · Xinqing</div>
-  <div class="footer-links">
-    <a href="https://github.com/Qing137/casa0015-mobile-assessment" target="_blank">GitHub</a>
-    <a href="mailto:zczqqx4@ucl.ac.uk">Contact</a>
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <div class="footer-brand-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+          <path d="M13.49 5.48c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.89 19.38l1-4.4 2.1 2v6h2v-7.5l-2.1-2 .6-3c1.3 1.5 3.3 2.5 5.5 2.5v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1l-5.2 2.2v4.7h2v-3.4l1.8-.7-1.6 8.1-4.9-1-.4 2 7 1.4z"/>
+        </svg>
+      </div>
+      <span>Runify</span>
+    </div>
+    <div class="footer-tagline">A smarter way to run in a healthier environment.</div>
+    <div class="footer-links">
+      <a href="https://github.com/Qing137/casa0015-mobile-assessment" target="_blank">GitHub</a>
+      <a href="mailto:zczqqx4@ucl.ac.uk">Contact</a>
+      <span class="footer-copy">© 2026 Xinqing · CASA0015 · UCL</span>
+    </div>
   </div>
 </footer>
- 
+
 <script>
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
+      if (entry.isIntersecting) entry.target.classList.add('visible');
     });
   }, { threshold: 0.1 });
- 
-  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-  document.querySelectorAll('.screenshot-item').forEach(el => observer.observe(el));
+  document.querySelectorAll('.screen-device').forEach(el => observer.observe(el));
 </script>
- 
+
 </body>
 </html>
- 
