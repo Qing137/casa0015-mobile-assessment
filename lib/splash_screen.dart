@@ -9,30 +9,73 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _fadeAnimation;
-  late Animation<double> _scaleAnimation;
+    with TickerProviderStateMixin {
+
+  late AnimationController _iconController;
+  late Animation<double> _iconOpacity;
+  late Animation<double> _iconScale;
+
+  late AnimationController _textController;
+  late Animation<double> _textOpacity;
+  late Animation<double> _textOffset;
+
+  late AnimationController _subtitleController;
+  late Animation<double> _subtitleOpacity;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 1500),
+
+    _iconController = AnimationController(
+      duration: const Duration(milliseconds: 700),
       vsync: this,
     );
 
-    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeIn),
+    _iconOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _iconController, curve: Curves.easeIn),
     );
 
-    _scaleAnimation = Tween<double>(begin: 0.5, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.elasticOut),
+    _iconScale = Tween<double>(begin: 0.6, end: 1.0).animate(
+      CurvedAnimation(parent: _iconController, curve: Curves.easeOut),
     );
 
-    _controller.forward();
+    _textController = AnimationController(
+      duration: const Duration(milliseconds: 600),
+      vsync: this,
+    );
 
-    Future.delayed(const Duration(seconds: 3), () {
+    _textOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _textController, curve: Curves.easeIn),
+    );
+
+    _textOffset = Tween<double>(begin: 16.0, end: 0.0).animate(
+      CurvedAnimation(parent: _textController, curve: Curves.easeOut),
+    );
+
+    _subtitleController = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    );
+
+    _subtitleOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _subtitleController, curve: Curves.easeIn),
+    );
+
+    _startSequence();
+  }
+
+  Future<void> _startSequence() async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    _iconController.forward();
+
+    await Future.delayed(const Duration(milliseconds: 600));
+    _textController.forward();
+
+    await Future.delayed(const Duration(milliseconds: 500));
+    _subtitleController.forward();
+
+    await Future.delayed(const Duration(milliseconds: 1500));
+    if (mounted) {
       Navigator.pushReplacement(
         context,
         PageRouteBuilder(
@@ -43,68 +86,126 @@ class _SplashScreenState extends State<SplashScreen>
           },
         ),
       );
-    });
+    }
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _iconController.dispose();
+    _textController.dispose();
+    _subtitleController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green.shade800,
-      body: Center(
-        child: FadeTransition(
-          opacity: _fadeAnimation,
-          child: ScaleTransition(
-            scale: _scaleAnimation,
+      backgroundColor: const Color(0xFF1B4332),
+      body: Stack(
+        children: [
+          Positioned(
+            top: -100,
+            right: -100,
+            child: Container(
+              width: 320,
+              height: 320,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white.withOpacity(0.04),
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: -120,
+            left: -80,
+            child: Container(
+              width: 380,
+              height: 380,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white.withOpacity(0.03),
+              ),
+            ),
+          ),
+          Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(28),
-                  ),
-                  child: const Icon(Icons.air, size: 60, color: Colors.white),
+
+                // 跑步图标
+                AnimatedBuilder(
+                  animation: _iconController,
+                  builder: (context, _) {
+                    return Opacity(
+                      opacity: _iconOpacity.value,
+                      child: Transform.scale(
+                        scale: _iconScale.value,
+                        child: Container(
+                          width: 110,
+                          height: 110,
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.12),
+                            borderRadius: BorderRadius.circular(32),
+                          ),
+                          child: const Icon(
+                            Icons.directions_run_rounded,
+                            size: 64,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                 ),
-                const SizedBox(height: 24),
-                const Text(
-                  'AirRun',
-                  style: TextStyle(
-                    fontSize: 44,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    letterSpacing: 2,
-                  ),
+
+                const SizedBox(height: 32),
+
+                // Runify 文字
+                AnimatedBuilder(
+                  animation: _textController,
+                  builder: (context, _) {
+                    return Opacity(
+                      opacity: _textOpacity.value,
+                      child: Transform.translate(
+                        offset: Offset(0, _textOffset.value),
+                        child: const Text(
+                          'Runify',
+                          style: TextStyle(
+                            fontSize: 52,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            letterSpacing: 3,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  'Know your air. Run smart.',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white.withOpacity(0.8),
-                    letterSpacing: 1,
-                  ),
-                ),
-                const SizedBox(height: 60),
-                SizedBox(
-                  width: 30,
-                  height: 30,
-                  child: CircularProgressIndicator(
-                    color: Colors.white.withOpacity(0.6),
-                    strokeWidth: 2,
-                  ),
+
+                const SizedBox(height: 10),
+
+                // 副标题
+                AnimatedBuilder(
+                  animation: _subtitleController,
+                  builder: (context, _) {
+                    return Opacity(
+                      opacity: _subtitleOpacity.value,
+                      child: Text(
+                        'Run smarter. Breathe safer.',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.white.withOpacity(0.65),
+                          letterSpacing: 1.2,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
           ),
-        ),
+        ],
       ),
     );
   }
