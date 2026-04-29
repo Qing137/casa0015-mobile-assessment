@@ -1,13 +1,20 @@
 # Runify 
 
 Your all-in-one companion for urban running — decide before you go, track while you run, log when you're done.
+
 ## 🔗 Resources
 
-**App Demo Video:** [Watch here](https://github.com/Qing137/casa0015-mobile-assessment/raw/main/runify-demo.mp4)
+### 🎬 App Demo Video
 
-**Landing Page:** [Visit the project website](https://qing137.github.io/casa0015-mobile-assessment)
+https://github.com/Qing137/casa0015-mobile-assessment/raw/main/runify-demo.mp4
 
-**Presentation Video:** [Watch here](https://github.com/Qing137/casa0015-mobile-assessment/raw/main/presentation-video.mp4)
+### 🎤 Presentation Video
+
+https://github.com/Qing137/casa0015-mobile-assessment/raw/main/presentation-video.mp4
+
+### 🌐 Landing Page
+
+[Visit the project website](https://qing137.github.io/casa0015-mobile-assessment)
 
 ## 🤔 Why Runify?
 
@@ -20,8 +27,6 @@ Runify brings all of this together in one app. Before you go out, it helps you d
 ## 🎬 Storyboard
 
 ![Storyboard](docs/screenshots/storyboard.png)
-
-
 
 ## 📸 Screenshots
 
@@ -43,9 +48,9 @@ Runify brings all of this together in one app. Before you go out, it helps you d
 
 🌤️ Weather Forecast — View a 6-hour weather outlook with temperature and rainfall trends to help choose a better time to run.
 
-🏃 Track Run — Use the phone’s accelerometer to track steps in real time and estimate distance, pace, and duration during a run.
+🏃 Track Run — Use the phone's accelerometer to track steps in real time and estimate distance, pace, and duration during a run.
 
-📋 Run Log — Save each run in a simple log and estimate calories burned based on the user’s weight.
+📋 Run Log — Save each run in a simple log and estimate calories burned based on the user's weight.
 
 ## 💻 Development Environment
 
@@ -55,6 +60,7 @@ Runify brings all of this together in one app. Before you go out, it helps you d
 - iOS Simulator / Android Emulator or physical device
 
 ## 📦 Dependencies and APIs
+
 **APIs**
 
 - OpenWeatherMap API — real-time AQI, current weather, and geocoding
@@ -69,9 +75,8 @@ Runify brings all of this together in one app. Before you go out, it helps you d
 - `shared_preferences: ^2.3.3` — local data persistence
 - `google_maps_flutter: ^2.6.0` — map display
 - `sensors_plus: ^4.0.0` — accelerometer for step counting
+
 ## 🚀 Getting Started
-
-
 
 1. Clone the repository:
 
@@ -98,6 +103,7 @@ flutter pub get
 ```bash
 flutter run
 ```
+
 ## 💭 Future Developments
 
 - Add an AQI heatmap overlay to the map, if higher-resolution spatial data becomes available, to make area-based air quality differences easier to understand.
