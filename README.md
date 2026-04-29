@@ -4,15 +4,15 @@ Your all-in-one companion for urban running — decide before you go, track whil
 
 ## 🔗 Resources
 
-### 🎬 App Demo Video
+### App Demo Video
 
 https://github.com/Qing137/casa0015-mobile-assessment/raw/main/runify-demo.mp4
 
-### 🎤 Presentation Video
+### Presentation Video
 
 https://github.com/Qing137/casa0015-mobile-assessment/raw/main/presentation-video.mp4
 
-### 🌐 Landing Page
+### Landing Page
 
 [Visit the project website](https://qing137.github.io/casa0015-mobile-assessment)
 
