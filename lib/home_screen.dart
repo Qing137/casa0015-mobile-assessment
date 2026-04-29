@@ -205,6 +205,11 @@ class _HomeScreenState extends State<HomeScreen> {
         foregroundColor: Colors.white,
         actions: [
           IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: _loadData,
+            tooltip: 'Refresh',
+          ),
+          IconButton(
             icon: const Icon(Icons.history),
             onPressed: () => Navigator.push(context,
               MaterialPageRoute(builder: (_) => RunLogScreen(
