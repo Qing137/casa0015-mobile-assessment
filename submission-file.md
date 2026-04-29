@@ -1,27 +1,10 @@
-<!---
 
----
-title: "CASA0017: Web Architecture Final Assessment"
-author: "Steven Gray"
-date: "10 Dec 2021"
----
-
--->
-
-# Submission Guide
-
-You will need to edit this file, create a PDF using the instructions below, from this file.   Sign it digitally and upload to Moodle
-
-## How to create a PDF from Markdown
-When finished you should export to PDF using VSCode and MarkdownPDF Extension. Make sure you select no headers and no footers in the
-extension preferences before exporting to PDF.   
-
-Upload this PDF into Moodle for submission including a copy of your presentation slides.
 
 # Link to GitHub Repository
 
-Flutter Application Name - **Runify** GitHub Repository - https://github.com/Qing137/casa0015-mobile-assessment.git
+Flutter Application Name: **Runify**
 
+GitHub Repository: [Qing137/casa0015-mobile-assessment](https://github.com/Qing137/casa0015-mobile-assessment)
 # Introduction to Application
 
 **Runify** is a mobile application designed to help urban runners make smarter decisions about when, where, and how to run. The app was developed in Flutter and addresses a common but fragmented experience: runners often switch between three or four different apps to check air quality, weather, find suitable running locations, and track their activity. Runify brings these together into a single, focused tool.
